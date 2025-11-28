@@ -1,12 +1,14 @@
-
-// قراءة validation-key عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
   // قراءة مفتاح validation
   fetch('/validation-key.txt')
     .then(res => res.text())
     .then(key => {
+      window.validationKey = key; // حفظ المفتاح مؤقتًا
       console.log("Validation Key Loaded ✅:", key);
-      window.validationKey = key; // حفظ المفتاح لاستخدام لاحق
+
+      // عرض المفتاح مباشرة في الصفحة لاختبار القراءة
+      const testEl = document.getElementById('test-key');
+      if(testEl) testEl.textContent = "Validation Key: " + key;
     })
     .catch(err => console.error("Error reading validation key:", err));
 
