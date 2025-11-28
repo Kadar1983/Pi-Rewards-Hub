@@ -1,16 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // استخدام الرابط الكامل لملف validation-key.txt على Vercel
-  fetch('https://pi-rewards-hub.vercel.app/validation-key.txt')
-    .then(res => res.text())
-    .then(key => {
-      window.validationKey = key; // حفظ المفتاح مؤقتًا
-      console.log("Validation Key Loaded ✅:", key);
+  // 🔑 المفتاح مدمج مباشرة هنا
+  window.validationKey = "de62ffda61541f23ccadcc2ea630fef2129b630af8a0aa57795e99d2e62419ba999006319e03819f913e3b6ca9a02ff0c5e3ddf2c654857d0fa6482779182e70";
 
-      // عرض المفتاح في الصفحة لاختبار القراءة
-      const testEl = document.getElementById('test-key');
-      if(testEl) testEl.textContent = "Validation Key: " + key;
-    })
-    .catch(err => console.error("Error reading validation key:", err));
+  // عرض المفتاح في الصفحة للاختبار
+  const testEl = document.getElementById('test-key');
+  if(testEl) testEl.textContent = "Validation Key: " + window.validationKey;
 
   // عرض اسم المستخدم والرصيد
   const username = localStorage.getItem('piUser');
