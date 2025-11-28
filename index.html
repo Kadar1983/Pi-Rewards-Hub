@@ -2,28 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pi Rewards Hub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome, <span id="username"></span></h1>
-  </header>
-  <main>
-    <section>
-      <h2>Your Pi Balance</h2>
-      <p id="pi-balance">0 Pi</p>
-      <button id="refresh-btn">Refresh</button>
-    </section>
-    <section>
-      <h2>Send Pi</h2>
-      <input type="text" id="friend-id" placeholder="Friend Pi ID">
-      <input type="number" id="amount" placeholder="Amount">
-      <button id="send-btn">Send</button>
-    </section>
-  </main>
-  <script src="app.js"></script>
+  <h1>Welcome, <span id="username"></span></h1>
+  <p>Your Balance: <span id="pi-balance"></span></p>
+
+  <h2>Send Pi</h2>
+  <input type="text" id="friend-id" placeholder="Friend ID">
+  <input type="number" id="amount" placeholder="Amount">
+  <button id="send-btn">Send</button>
+
+  <script src="script.js"></script>
 </body>
 </html>
 
