@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // قراءة مفتاح validation
-  fetch('/validation-key.txt')
+  // استخدام الرابط الكامل لملف validation-key.txt على Vercel
+  fetch('https://pi-rewards-hub.vercel.app/validation-key.txt')
     .then(res => res.text())
     .then(key => {
       window.validationKey = key; // حفظ المفتاح مؤقتًا
       console.log("Validation Key Loaded ✅:", key);
 
-      // عرض المفتاح مباشرة في الصفحة لاختبار القراءة
+      // عرض المفتاح في الصفحة لاختبار القراءة
       const testEl = document.getElementById('test-key');
       if(testEl) testEl.textContent = "Validation Key: " + key;
     })
