@@ -2,21 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pi Rewards Hub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome, <span id="username"></span></h1>
-  <p>Your Balance: <span id="pi-balance"></span></p>
+  <h1>Pi Rewards Hub</h1>
 
-  <!-- div لاختبار عرض المفتاح -->
+  <!-- قسم تسجيل الدخول -->
+  <div>
+    <input type="text" id="pi-id" placeholder="Enter Pi ID">
+    <button id="login-btn">Login</button>
+  </div>
+
+  <!-- عرض اسم المستخدم والرصيد -->
+  <div>
+    <h2 id="username">Guest</h2>
+    <p>Balance: <span id="pi-balance">0 Pi</span></p>
+  </div>
+
+  <!-- إرسال Pi -->
+  <div>
+    <input type="text" id="friend-id" placeholder="Friend Pi ID">
+    <input type="number" id="amount" placeholder="Amount">
+    <button id="send-btn">Send Pi</button>
+  </div>
+
+  <!-- div لاختبار قراءة المفتاح -->
   <div id="test-key" style="margin-top:20px;color:green;"></div>
-
-  <h2>Send Pi</h2>
-  <input type="text" id="friend-id" placeholder="Friend ID">
-  <input type="number" id="amount" placeholder="Amount">
-  <button id="send-btn">Send</button>
 
   <script src="script.js"></script>
 </body>
 </html>
+
+
+---
