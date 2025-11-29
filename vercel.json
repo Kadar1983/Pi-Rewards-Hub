@@ -1,11 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "style.css", "use": "@vercel/static" },
-    { "src": "app.js", "use": "@vercel/static" }
-  ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/validation-key.txt",
+      "dest": "/validation-key.txt"
+    }
   ]
 }
