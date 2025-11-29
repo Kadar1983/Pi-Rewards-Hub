@@ -14,9 +14,11 @@ export default function PiRewardsHub() {
     }
 
     try {
+      // المصادقة عبر Pi Auth
       const authUser = await window.Pi.authenticate({ PiID: piID });
       setUser(authUser);
 
+      // جلب الرصيد
       const userBalance = await window.Pi.getBalance({ PiID: piID });
       setBalance(userBalance);
     } catch (err) {
@@ -27,16 +29,21 @@ export default function PiRewardsHub() {
 
   // إرسال Pi إلى التطبيق
   const sendPi = async () => {
-    if (!amount || !user) return alert("Enter amount or login first!");
+    if (!amount || !user) {
+      alert("Enter amount or login first!");
+      return;
+    }
 
     try {
       const tx = await window.Pi.makePayment({
         fromUser: user,
-        toApp: "APP_WALLET_ADDRESS", // استبدل بمحفظة التطبيق
+        toApp: "APP_WALLET_ADDRESS", // استبدل بمحفظة التطبيق الفعلية
         amount: parseFloat(amount),
       });
+
       alert("Transaction Successful! TX ID: " + tx.id);
 
+      // تحديث الرصيد بعد الإرسال
       const updatedBalance = await window.Pi.getBalance({ PiID: piID });
       setBalance(updatedBalance);
       setAmount("");
@@ -46,6 +53,7 @@ export default function PiRewardsHub() {
     }
   };
 
+  // JSX الخاص بالواجهة
   return (
     <div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
       <h1>Pi Rewards Hub</h1>
