@@ -1,39 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pi Rewards Hub</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>Pi Rewards Hub</h1>
+import { useState } from "react";
 
-  <!-- قسم تسجيل الدخول -->
-  <div>
-    <input type="text" id="pi-id" placeholder="Enter Pi ID">
-    <button id="login-btn">Login</button>
-  </div>
+export default function PiRewardsHub() {
+  const [piID, setPiID] = useState("");
+  const [user, setUser] = useState(null);
+  const [balance, setBalance] = useState(0);
+  const [amount, setAmount] = useState("");
 
-  <!-- عرض اسم المستخدم والرصيد -->
-  <div>
-    <h2 id="username">Guest</h2>
-    <p>Balance: <span id="pi-balance">0 Pi</span></p>
-  </div>
+  // تسجيل الدخول والمصادقة
+  const handleAuth = async () => {
+    if (!window.Pi) {
+      alert("Please open in Pi Browser!");
+      return;
+    }
 
-  <!-- إرسال Pi -->
-  <div>
-    <input type="text" id="friend-id" placeholder="Friend Pi ID">
-    <input type="number" id="amount" placeholder="Amount">
-    <button id="send-btn">Send Pi</button>
-  </div>
+    try {
+      const authUser = await window.Pi.authenticate({ PiID: piID });
+      setUser(authUser);
 
-  <!-- div لاختبار قراءة المفتاح -->
-  <div id="test-key" style="margin-top:20px;color:green;"></div>
+      const userBalance = await window.Pi.getBalance({ PiID: piID });
+      setBalance(userBalance);
+    } catch (err) {
+      console.error(err);
+      alert("Authentication failed. Check your Pi ID.");
+    }
+  };
 
-  <script src="script.js"></script>
-</body>
-</html>
+  // إرسال Pi إلى التطبيق
+  const sendPi = async () => {
+    if (!amount || !user) return alert("Enter amount or login first!");
+
+    try {
+      const tx = await window.Pi.makePayment({
+        fromUser: user,
+        toApp: "APP_WALLET_ADDRESS", // استبدل بمحفظة التطبيق
+        amount: parseFloat(amount),
+      });
+      alert("Transaction Successful! TX ID: " + tx.id);
+
+      const updatedBalance = await window.Pi.getBalance({ PiID: piID });
+      setBalance(updatedBalance);
+      setAmount("");
+    } catch (err) {
+      console.error(err);
+      alert("Transaction failed.");
+    }
+  };
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>Pi Rewards Hub</h1>
+
+      {!user ? (
+        <div>
+          <input
+            type="text"
+            placeholder="Enter Pi ID"
+            value={piID}
+            onChange={(e) => setPiID(e.target.value)}
+          />
+          <button onClick={handleAuth}>Login / Authenticate</button>
+        </div>
+      ) : (
+        <div>
+          <p>Welcome, {user.PiID}</p>
+          <p>Balance: {balance} π</p>
+
+          <input
+            type="number"
+            placeholder="Amount to Send"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <button onClick={sendPi}>Send Pi</button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 
 ---
