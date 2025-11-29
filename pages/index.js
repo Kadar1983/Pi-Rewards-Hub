@@ -1,110 +1,86 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function PiRewardsHub() {
+  const [piID, setPiID] = useState("");
   const [user, setUser] = useState(null);
-  const [balance, setBalance] = useState(null);
+  const [balance, setBalance] = useState(0);
   const [amount, setAmount] = useState("");
 
-  // تشغيل Pi SDK
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.Pi) {
-      window.Pi.init({ version: "2.0" });
-    }
-  }, []);
-
-  // تسجيل الدخول
-  const handleLogin = async () => {
+  // تسجيل الدخول والمصادقة
+  const handleAuth = async () => {
     if (!window.Pi) {
-      alert("Please open this app inside Pi Browser!");
+      alert("Please open in Pi Browser!");
       return;
     }
-
     try {
-      const auth = await window.Pi.authenticate(
-        { permissions: ["username", "payments"] },
-        onIncompletePayment
-      );
-      setUser(auth.user);
-    } catch (e) {
-      console.error(e);
-      alert("Authentication failed!");
+      const authUser = await window.Pi.authenticate({ PiID: piID });
+      setUser(authUser);
+      const userBalance = await window.Pi.getBalance({ PiID: piID });
+      setBalance(userBalance);
+    } catch (err) {
+      console.error(err);
+      alert("Authentication failed. Check your Pi ID.");
     }
   };
 
-  // جلب الرصيد
-  const getBalance = async () => {
-    try {
-      const wallet = await window.Pi.getWallet();
-      setBalance(wallet.balance);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  // التعامل مع مدفوعات غير مكتملة
-  const onIncompletePayment = (payment) => {
-    console.log("Incomplete payment:", payment);
-  };
-
-  // إرسال Pi
+  // إرسال Pi إلى التطبيق
   const sendPi = async () => {
-    if (!amount) return alert("Enter an amount!");
-
+    if (!amount || !user) {
+      alert("Enter amount or login first!");
+      return;
+    }
     try {
-      const payment = await window.Pi.createPayment({
+      const tx = await window.Pi.makePayment({
+        fromUser: user,
+        toApp: "APP_WALLET_ADDRESS", // استبدل بمحفظة التطبيق الفعلية
         amount: parseFloat(amount),
-        memo: "Pi Rewards Hub Payment",
-        metadata: { test: true }
       });
-
-      alert("Payment completed!");
+      alert("Transaction Successful! TX ID: " + tx.id);
+      const updatedBalance = await window.Pi.getBalance({ PiID: piID });
+      setBalance(updatedBalance);
       setAmount("");
-      getBalance();
-    } catch (e) {
-      console.error(e);
-      alert("Payment failed!");
+    } catch (err) {
+      console.error(err);
+      alert("Transaction failed.");
     }
   };
 
   return (
-    <div style={{ padding: 20, textAlign: "center", fontFamily: "Arial" }}>
+    <div style={{ padding: 20, fontFamily: "Arial" }}>
       <h1>Pi Rewards Hub</h1>
 
       {!user ? (
-        <>
-          <button
-            onClick={handleLogin}
-            style={{ padding: 10, fontSize: 18 }}
-          >
-            Login with Pi
+        <div>
+          <input
+            type="text"
+            placeholder="Enter Pi ID"
+            value={piID}
+            onChange={(e) => setPiID(e.target.value)}
+            style={{ padding: 10, fontSize: 16, width: "80%" }}
+          />
+          <button onClick={handleAuth} style={{ padding: 10, marginLeft: 10 }}>
+            Login / Authenticate
           </button>
-        </>
+        </div>
       ) : (
-        <>
-          <h3>Welcome, {user.username}</h3>
-
-          <button onClick={getBalance} style={{ padding: 10, marginBottom: 10 }}>
-            Refresh Balance
-          </button>
-
-          {balance !== null && (
-            <p><b>Balance:</b> {balance} π</p>
-          )}
-
+        <div>
+          <p>
+            Welcome, <b>{user.PiID}</b>
+          </p>
+          <p>
+            Balance: <b>{balance} π</b>
+          </p>
           <input
             type="number"
             placeholder="Amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            style={{ padding: 10, width: "60%" }}
+            style={{ padding: 10, fontSize: 16, width: "60%" }}
           />
-
-          <br /><br />
-
-          <button onClick={sendPi} style={{ padding: 10, fontSize: 18 }}>
+          <button onClick={sendPi} style={{ padding: 10, marginLeft: 10 }}>
             Send Pi
           </button>
-        </>
+        </div>
       )}
     </div>
   );
