@@ -47,31 +47,43 @@ export default function PiRewardsHub() {
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
       <h1>Pi Rewards Hub</h1>
 
       {!user ? (
-        <div>
+        <div style={{ marginTop: 20 }}>
           <input
             type="text"
             placeholder="Enter Pi ID"
             value={piID}
             onChange={(e) => setPiID(e.target.value)}
+            style={{ padding: 10, fontSize: 16, width: "80%" }}
           />
-          <button onClick={handleAuth}>Login / Authenticate</button>
+          <button
+            onClick={handleAuth}
+            style={{ padding: 10, marginLeft: 10, fontSize: 16 }}
+          >
+            Login / Authenticate
+          </button>
         </div>
       ) : (
-        <div>
-          <p>Welcome, {user.PiID}</p>
-          <p>Balance: {balance} π</p>
+        <div style={{ marginTop: 20 }}>
+          <p>Welcome, <strong>{user.PiID}</strong></p>
+          <p>Balance: <strong>{balance} π</strong></p>
 
           <input
             type="number"
             placeholder="Amount to Send"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            style={{ padding: 10, fontSize: 16, width: "60%" }}
           />
-          <button onClick={sendPi}>Send Pi</button>
+          <button
+            onClick={sendPi}
+            style={{ padding: 10, marginLeft: 10, fontSize: 16 }}
+          >
+            Send Pi
+          </button>
         </div>
       )}
     </div>
