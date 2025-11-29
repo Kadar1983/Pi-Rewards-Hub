@@ -1,21 +1,27 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Pi Rewards Hub</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { padding: 10px; font-size: 16px; width: 80%; margin-top: 10px; }
+    button { padding: 10px; font-size: 16px; margin-left: 10px; margin-top: 10px; }
+  </style>
 </head>
 <body>
   <h1>Pi Rewards Hub</h1>
 
-  <div id="app">
+  <div id="loginDiv">
     <input type="text" id="piID" placeholder="Enter Pi ID" />
     <button onclick="handleAuth()">Login / Authenticate</button>
-    <div id="userInfo" style="display:none;">
-      <p id="welcome"></p>
-      <p id="balance"></p>
-      <input type="number" id="amount" placeholder="Amount to Send" />
-      <button onclick="sendPi()">Send Pi</button>
-    </div>
+  </div>
+
+  <div id="userDiv" style="display:none;">
+    <p id="welcome"></p>
+    <p id="balance"></p>
+    <input type="number" id="amount" placeholder="Amount to Send" />
+    <button onclick="sendPi()">Send Pi</button>
   </div>
 
   <script>
@@ -23,14 +29,21 @@
 
     async function handleAuth() {
       const piID = document.getElementById("piID").value;
-      if (!window.Pi) return alert("Please open in Pi Browser!");
+      if (!window.Pi) {
+        alert("Please open in Pi Browser!");
+        return;
+      }
       try {
         user = await window.Pi.authenticate({ PiID: piID });
         const balance = await window.Pi.getBalance({ PiID: piID });
+
         document.getElementById("welcome").innerText = "Welcome, " + user.PiID;
         document.getElementById("balance").innerText = "Balance: " + balance + " π";
-        document.getElementById("userInfo").style.display = "block";
+
+        document.getElementById("loginDiv").style.display = "none";
+        document.getElementById("userDiv").style.display = "block";
       } catch (err) {
+        console.error(err);
         alert("Authentication failed. Check your Pi ID.");
       }
     }
@@ -41,16 +54,21 @@
       try {
         const tx = await window.Pi.makePayment({
           fromUser: user,
-          toApp: "APP_WALLET_ADDRESS",
+          toApp: "APP_WALLET_ADDRESS", // استبدل بمحفظة التطبيق
           amount: amount
         });
         alert("Transaction Successful! TX ID: " + tx.id);
+
         const balance = await window.Pi.getBalance({ PiID: user.PiID });
         document.getElementById("balance").innerText = "Balance: " + balance + " π";
       } catch (err) {
+        console.error(err);
         alert("Transaction failed.");
       }
     }
   </script>
 </body>
 </html>
+
+
+---
