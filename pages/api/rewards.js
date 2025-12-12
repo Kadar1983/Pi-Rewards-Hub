@@ -5,7 +5,6 @@ export default function handler(req, res) {
       { name: "Mini-Game Win", points: 10 },
       { name: "Referral Bonus", points: 20 }
     ];
-
     return res.status(200).json(rewards);
   } else {
     res.setHeader("Allow", ["GET"]);
