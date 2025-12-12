@@ -1,33 +1,30 @@
 import React, { useState } from "react";
 
-const WalletConnect = () => {
+export default function WalletConnect() {
   const [connected, setConnected] = useState(false);
 
-  const handleConnect = () => {
-    if (window.Pi) {
-      window.Pi.request({ method: "connect" })
-        .then(() => {
-          setConnected(true);
-          alert("Wallet connected!");
-        })
-        .catch((err) => alert("Connection failed: " + err.message));
+  const handleConnect = async () => {
+    if (typeof window !== "undefined" && window.Pi && typeof window.Pi.request === "function") {
+      try {
+        await window.Pi.request({ method: "connect" });
+        setConnected(true);
+        alert("Wallet connected (Pi Browser).");
+      } catch (e) {
+        console.error(e);
+        alert("Failed to connect Pi Wallet.");
+      }
     } else {
-      alert("Pi Browser is required to connect wallet");
+      const ok = confirm("Pi Browser not detected. Enable demo wallet for preview?");
+      if (ok) {
+        setConnected(true);
+        alert("Demo wallet enabled.");
+      }
     }
   };
 
   return (
-    <button
-      onClick={handleConnect}
-      className={`px-4 py-2 rounded-lg font-semibold ${
-        connected
-          ? "bg-green-500 text-white"
-          : "bg-white text-blue-500 border border-blue-500"
-      } hover:opacity-90 transition-opacity`}
-    >
+    <button onClick={handleConnect} className={connected ? "px-3 py-2 rounded-lg bg-green-500 text-white" : "px-3 py-2 rounded-lg border"}>
       {connected ? "Connected" : "Connect Wallet"}
     </button>
   );
-};
-
-export default WalletConnect;
+}
