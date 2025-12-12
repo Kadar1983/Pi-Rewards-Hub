@@ -1,8 +1,56 @@
-export default function handler(req, res) {
-  if (req.method === 'POST') {
-    const { amount } = req.body || {};
-    // In live app: verify KYC, check balance, create withdraw record and schedule payout.
-    return res.status(200).json({ status: 'pending', message: `تم تسجيل طلب سحب ${amount} π` });
-  }
-  return res.status(200).json({ status: 'ready' });
-}
+import React, { useState } from "react";
+import axios from "axios";
+import Layout from "../components/Layout";
+
+const Withdraw = () => {
+  const [amount, setAmount] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleWithdraw = async () => {
+    if (!amount) {
+      setMessage("Please enter an amount");
+      return;
+    }
+
+    try {
+      // استدعاء API سحب النقاط أو العملات
+      const response = await axios.post("/api/withdraw", { amount });
+
+      // التأكد من وجود البيانات
+      if (response && response.data) {
+        setMessage(response.data.message || "Withdrawal request submitted!");
+      } else {
+        setMessage("Unexpected response from server");
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage(
+        error.response?.data?.message || "Error occurred during withdrawal"
+      );
+    }
+  };
+
+  return (
+    <Layout>
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-4">Withdraw</h1>
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Enter amount"
+          className="border p-2 mb-4 w-full"
+        />
+        <button
+          onClick={handleWithdraw}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Withdraw
+        </button>
+        {message && <p className="mt-4">{message}</p>}
+      </div>
+    </Layout>
+  );
+};
+
+export default Withdraw;
