@@ -1,13 +1,18 @@
 import React from "react";
-import WalletConnect from "./WalletConnect";
+import Link from "next/link";
 
-const Navbar = () => {
+export default function Navbar() {
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 flex justify-between items-center shadow-lg">
-      <h1 className="text-xl font-bold">Pi Rewards Hub</h1>
-      <WalletConnect />
+    <nav className="bg-white dark:bg-gray-800 shadow-md p-4 rounded-2xl flex justify-between items-center">
+      <h1 className="text-xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+        Pi Rewards Hub
+      </h1>
+
+      <div className="flex gap-4 text-sm font-medium">
+        <Link href="/">Dashboard</Link>
+        <Link href="/rewards">Rewards</Link>
+        <Link href="/withdraw">Withdraw</Link>
+      </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
