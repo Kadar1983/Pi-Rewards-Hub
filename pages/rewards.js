@@ -25,17 +25,15 @@ const Rewards = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4">Your Rewards</h1>
-        {error && <p className="text-red-500">{error}</p>}
-        <ul>
-          {rewards.map((reward, index) => (
-            <li key={index} className="border p-2 mb-2">
-              {reward.name} - {reward.points} points
-            </li>
-          ))}
-        </ul>
-      </div>
+      <h1 className="text-3xl font-bold mb-4">Your Rewards</h1>
+      {error && <p className="text-red-500">{error}</p>}
+      <ul>
+        {rewards.map((reward, index) => (
+          <li key={index} className="border p-2 mb-2">
+            {reward.name} - {reward.points} points
+          </li>
+        ))}
+      </ul>
     </Layout>
   );
 };
