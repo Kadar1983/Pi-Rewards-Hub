@@ -1,7 +1,5 @@
-// pages/api/rewards.js
 export default function handler(req, res) {
   if (req.method === "GET") {
-    // بيانات تجريبية للمكافآت
     const rewards = [
       { name: "Daily Login", points: 5 },
       { name: "Mini-Game Win", points: 10 },
