@@ -13,10 +13,7 @@ const Withdraw = () => {
     }
 
     try {
-      // استدعاء API سحب النقاط أو العملات
       const response = await axios.post("/api/withdraw", { amount });
-
-      // التأكد من وجود البيانات
       if (response && response.data) {
         setMessage(response.data.message || "Withdrawal request submitted!");
       } else {
@@ -32,23 +29,21 @@ const Withdraw = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4">Withdraw</h1>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Enter amount"
-          className="border p-2 mb-4 w-full"
-        />
-        <button
-          onClick={handleWithdraw}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Withdraw
-        </button>
-        {message && <p className="mt-4">{message}</p>}
-      </div>
+      <h1 className="text-3xl font-bold mb-4">Withdraw</h1>
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Enter amount"
+        className="border p-2 mb-4 w-full"
+      />
+      <button
+        onClick={handleWithdraw}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Withdraw
+      </button>
+      {message && <p className="mt-4">{message}</p>}
     </Layout>
   );
 };
