@@ -1,54 +1,25 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
+import Navbar from "./Navbar";
 
 export default function Layout({ children }) {
-  const router = useRouter();
-
-  const menu = [
-    { name: "Dashboard", path: "/" },
-    { name: "Rewards", path: "/rewards" },
-    { name: "Game", path: "/game" },
-    { name: "Withdraw", path: "/withdraw" }
-  ];
+  useEffect(() => {
+    // ensure RTL for Arabic
+    if (typeof document !== "undefined") document.documentElement.setAttribute("dir", "rtl");
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white">
-      
-      {/* NAVBAR */}
-      <motion.nav
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="sticky top-0 z-50 backdrop-blur-xl bg-white/10 dark:bg-black/20 shadow-lg border-b border-white/20 p-4 flex justify-between items-center"
-      >
-        <h1 className="text-xl font-bold drop-shadow-md">Pi Rewards Hub</h1>
-      </motion.nav>
-
-      {/* CONTENT */}
-      <main className="p-5 pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800">
+      <Navbar />
+      <main className="container mx-auto p-4">
         {children}
       </main>
-
-      {/* BOTTOM NAVIGATION */}
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="fixed bottom-0 left-0 right-0 bg-white/40 dark:bg-black/40 backdrop-blur-xl border-t border-white/20 shadow-xl p-3 flex justify-around"
-      >
-        {menu.map((item, i) => (
-          <Link key={i} href={item.path}>
-            <div
-              className={`text-center px-3 py-2 rounded-xl cursor-pointer ${
-                router.pathname === item.path
-                  ? "bg-purple-600 text-white shadow-md"
-                  : "text-gray-700 dark:text-gray-300"
-              }`}
-            >
-              {item.name}
-            </div>
-          </Link>
-        ))}
-      </motion.div>
+      <footer className="fixed left-0 right-0 bottom-0 p-3 bg-black/20 backdrop-blur-md text-sm text-slate-300 flex justify-between items-center px-6">
+        <div>© Pi Rewards Hub</div>
+        <div className="flex gap-4">
+          <a href="/privacy" className="text-muted">Privacy</a>
+          <a href="/terms" className="text-muted">Terms</a>
+        </div>
+      </footer>
     </div>
   );
 }
