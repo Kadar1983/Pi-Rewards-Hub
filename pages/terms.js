@@ -1,15 +1,11 @@
-import React from "react";
 import Layout from "../components/Layout";
-
-const Terms = () => {
+export default function Terms() {
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mb-4">Terms & Conditions</h1>
-      <p className="text-gray-700 dark:text-gray-200">
-        By using this app, you agree to the rules and regulations set forth herein.
-      </p>
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-2">الشروط و الأحكام</h2>
+        <p className="text-sm text-muted">باستخدام هذا التطبيق التجريبي، أنت توافق على الشروط. لا معاملات حقيقية هنا.</p>
+      </div>
     </Layout>
   );
-};
-
-export default Terms;
+    }
