@@ -1,15 +1,11 @@
-import React from "react";
 import Layout from "../components/Layout";
-
-const Privacy = () => {
+export default function Privacy() {
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
-      <p className="text-gray-700 dark:text-gray-200">
-        Your privacy is important to us. All your data will be handled securely and only used for app functionality.
-      </p>
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-2">سياسة الخصوصية</h2>
+        <p className="text-sm text-muted">نحترم خصوصيتك. التطبيق تجريبي ويخزن البيانات محليًا على جهازك فقط.</p>
+      </div>
     </Layout>
   );
-};
-
-export default Privacy;
+    }
