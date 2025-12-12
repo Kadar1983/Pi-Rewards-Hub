@@ -5,8 +5,8 @@ const Privacy = () => {
   return (
     <Layout>
       <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
-      <p>
-        This is the Privacy Policy page. Your privacy is very important to us.
+      <p className="text-gray-700 dark:text-gray-200">
+        Your privacy is important to us. All your data will be handled securely and only used for app functionality.
       </p>
     </Layout>
   );
