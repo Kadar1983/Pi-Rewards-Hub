@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans;
+  font-family: 'Inter', sans-serif;
 }
 
 button {
-  @apply transition-all duration-200;
+  transition: all 0.2s ease;
 }
