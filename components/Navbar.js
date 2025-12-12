@@ -1,14 +1,14 @@
-import BalanceCard from './BalanceCard';
-import WalletConnect from './WalletConnect';
+import React from "react";
 
-export default function Navbar() {
+const Navbar = () => {
   return (
-    <div className='flex items-center justify-between gap-3'>
-      <h1 className='text-2xl font-bold'>Pi Rewards Hub</h1>
-      <div className='flex items-center gap-3'>
-        <BalanceCard balance={78.00441} />
-        <WalletConnect />
-      </div>
-    </div>
-  )
-}
+    <nav className="bg-blue-500 text-white p-4 flex justify-between items-center">
+      <h1 className="text-xl font-bold">Pi Rewards Hub</h1>
+      <button className="bg-white text-blue-500 px-3 py-1 rounded">
+        Connect Wallet
+      </button>
+    </nav>
+  );
+};
+
+export default Navbar;
