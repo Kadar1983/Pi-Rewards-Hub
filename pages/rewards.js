@@ -16,7 +16,6 @@ const Rewards = () => {
           setError("Unexpected response from server");
         }
       } catch (err) {
-        console.error(err);
         setError(err.response?.data?.message || "Error fetching rewards");
       }
     };
@@ -26,10 +25,10 @@ const Rewards = () => {
   return (
     <Layout>
       <h1 className="text-3xl font-bold mb-4">Your Rewards</h1>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500 mb-4">{error}</p>}
       <ul>
         {rewards.map((reward, index) => (
-          <li key={index} className="border p-2 mb-2">
+          <li key={index} className="border p-4 mb-2 rounded-lg bg-white dark:bg-gray-800 shadow">
             {reward.name} - {reward.points} points
           </li>
         ))}
