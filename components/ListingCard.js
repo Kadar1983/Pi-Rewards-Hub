@@ -1,16 +1,16 @@
-export default function ListingCard({ item }) {
+import React from "react";
+
+export default function ListingCard({ item, onBuy }) {
   return (
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg mb-4">
-      <h3 className="text-lg font-bold">{item.name}</h3>
-      <p className="text-purple-600 dark:text-purple-300 font-bold mt-1">
-        Price: {item.price} π
-      </p>
-      <p className="text-sm text-gray-600 dark:text-gray-400">
-        Seller: {item.seller}
-      </p>
-      <button className="mt-3 w-full bg-gradient-to-r from-pink-500 to-red-500 text-white px-3 py-2 rounded-xl hover:scale-105 transition">
-        Buy
-      </button>
+    <div className="card flex items-center justify-between">
+      <div>
+        <div className="font-bold">{item.name}</div>
+        <div className="text-sm text-muted">Seller: {item.seller}</div>
+      </div>
+      <div className="text-right">
+        <div className="text-purple-400 font-bold">{item.price} π</div>
+        <button onClick={() => onBuy && onBuy(item)} className="mt-2 btn-primary text-sm px-3 py-1">Buy</button>
+      </div>
     </div>
   );
     }
