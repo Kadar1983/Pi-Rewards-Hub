@@ -1,18 +1,54 @@
-import React from "react";
 import Link from "next/link";
+import WalletConnect from "./WalletConnect";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  return (
-    <nav className="bg-white dark:bg-gray-800 shadow-md p-4 rounded-2xl flex justify-between items-center">
-      <h1 className="text-xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-        Pi Rewards Hub
-      </h1>
+  const router = useRouter();
+  const [theme, setTheme] = useState("dark");
 
-      <div className="flex gap-4 text-sm font-medium">
-        <Link href="/">Dashboard</Link>
-        <Link href="/rewards">Rewards</Link>
-        <Link href="/withdraw">Withdraw</Link>
+  useEffect(() => {
+    const s = localStorage.getItem("pi_theme");
+    if (s) setTheme(s);
+  }, []);
+
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.toggle("light");
+    localStorage.setItem("pi_theme", isDark ? "light" : "dark");
+    setTheme(isDark ? "light" : "dark");
+  };
+
+  const items = [
+    { name: "Dashboard", path: "/" },
+    { name: "Rewards", path: "/rewards" },
+    { name: "Game", path: "/game" },
+    { name: "Withdraw", path: "/withdraw" }
+  ];
+
+  return (
+    <div className="navbar mx-4 my-4 rounded-xl2">
+      <div className="flex items-center gap-3">
+        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-500 flex items-center justify-center text-white font-bold">π</div>
+        <div>
+          <div className="font-bold text-lg">Pi Rewards Hub</div>
+          <div className="text-xs text-muted">Built for Pi Browser</div>
+        </div>
       </div>
-    </nav>
+
+      <div className="hidden sm:flex items-center gap-3">
+        {items.map(i => (
+          <Link key={i.path} href={i.path}>
+            <a className={`px-3 py-2 rounded-lg ${router.pathname === i.path ? 'bg-violet-700 text-white' : 'text-slate-200'}`}>{i.name}</a>
+          </Link>
+        ))}
+        <button onClick={toggleTheme} className="btn-ghost">Theme</button>
+        <WalletConnect />
+      </div>
+
+      {/* mobile actions */}
+      <div className="sm:hidden flex items-center gap-2">
+        <WalletConnect />
+      </div>
+    </div>
   );
 }
