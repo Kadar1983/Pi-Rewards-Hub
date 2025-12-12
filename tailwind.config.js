@@ -1,15 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./pages/**/*.{js,jsx}', './components/**/*.{js,jsx}'],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}"
+  ],
   theme: {
-    extend: {
-      colors: {
-        piPurple: '#1f1430',
-        piGradientStart: '#1f1430',
-        piGradientEnd: '#2b2140',
-        accent: '#ff8c42'
-      }
-    }
+    extend: {},
   },
   plugins: [],
+  darkMode: 'class', // تمكين الوضع الليلي
 }
