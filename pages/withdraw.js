@@ -7,23 +7,16 @@ const Withdraw = () => {
   const [message, setMessage] = useState("");
 
   const handleWithdraw = async () => {
-    if (!amount) {
-      setMessage("Please enter an amount");
+    if (!amount || amount <= 0) {
+      setMessage("Please enter a valid amount");
       return;
     }
 
     try {
       const response = await axios.post("/api/withdraw", { amount });
-      if (response && response.data) {
-        setMessage(response.data.message || "Withdrawal request submitted!");
-      } else {
-        setMessage("Unexpected response from server");
-      }
+      setMessage(response.data.message || "Withdrawal requested!");
     } catch (error) {
-      console.error(error);
-      setMessage(
-        error.response?.data?.message || "Error occurred during withdrawal"
-      );
+      setMessage(error.response?.data?.message || "Error during withdrawal");
     }
   };
 
@@ -35,15 +28,15 @@ const Withdraw = () => {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
         placeholder="Enter amount"
-        className="border p-2 mb-4 w-full"
+        className="border p-3 mb-4 w-full rounded-lg"
       />
       <button
         onClick={handleWithdraw}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-2 rounded-lg hover:scale-105 transition-transform"
       >
         Withdraw
       </button>
-      {message && <p className="mt-4">{message}</p>}
+      {message && <p className="mt-4 text-gray-700 dark:text-gray-200">{message}</p>}
     </Layout>
   );
 };
