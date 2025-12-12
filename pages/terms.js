@@ -5,8 +5,8 @@ const Terms = () => {
   return (
     <Layout>
       <h1 className="text-3xl font-bold mb-4">Terms & Conditions</h1>
-      <p>
-        This is the Terms & Conditions page. Please read carefully before using the app.
+      <p className="text-gray-700 dark:text-gray-200">
+        By using this app, you agree to the rules and regulations set forth herein.
       </p>
     </Layout>
   );
