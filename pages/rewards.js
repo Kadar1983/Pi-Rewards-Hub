@@ -1,40 +1,30 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Layout from "../components/Layout";
 
-const Rewards = () => {
-  const [rewards, setRewards] = useState([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchRewards = async () => {
-      try {
-        const response = await axios.get("/api/rewards");
-        if (response && response.data) {
-          setRewards(response.data);
-        } else {
-          setError("Unexpected response from server");
-        }
-      } catch (err) {
-        setError(err.response?.data?.message || "Error fetching rewards");
-      }
-    };
-    fetchRewards();
-  }, []);
-
+export default function Rewards() {
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mb-4">Your Rewards</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <ul>
-        {rewards.map((reward, index) => (
-          <li key={index} className="border p-4 mb-2 rounded-lg bg-white dark:bg-gray-800 shadow">
-            {reward.name} - {reward.points} points
-          </li>
-        ))}
-      </ul>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+        <h1 className="text-2xl font-bold">Rewards Center</h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-300">
+          Unlock rewards by completing tasks and daily missions.
+        </p>
+
+        <div className="mt-6 space-y-4">
+          <div className="p-4 bg-purple-100 dark:bg-purple-900 rounded-xl shadow">
+            <h3 className="font-bold text-purple-700 dark:text-purple-300">Daily Login</h3>
+            <button className="mt-2 bg-purple-600 text-white py-1 px-4 rounded-xl">
+              Claim Reward
+            </button>
+          </div>
+
+          <div className="p-4 bg-indigo-100 dark:bg-indigo-900 rounded-xl shadow">
+            <h3 className="font-bold text-indigo-700 dark:text-indigo-300">Watch Ads</h3>
+            <button className="mt-2 bg-indigo-600 text-white py-1 px-4 rounded-xl">
+              Earn 0.02π
+            </button>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
-};
-
-export default Rewards;
+    }
