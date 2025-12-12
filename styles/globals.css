@@ -2,16 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
-  --bg:#1f1430;
-  --accent:#ff8c42;
-}
-
+/* أنماط إضافية يمكنك تعديلها */
 body {
-  background: linear-gradient(180deg, var(--bg) 0%, #2b2140 100%);
-  color: white;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+  @apply bg-gray-50 text-gray-800;
+  font-family: 'Inter', sans-serif;
 }
-
-.bg-accent{ background: var(--accent); color: #000; }
