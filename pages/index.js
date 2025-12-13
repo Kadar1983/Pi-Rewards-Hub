@@ -1,28 +1,10 @@
 import Layout from "../components/Layout";
 import PiAuth from "../components/PiAuth";
 import WalletConnect from "../components/WalletConnect";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Home() {
   const [balance, setBalance] = useState(78.00441);
-
-  // تحميل وتهيئة Pi SDK ديناميكيًا
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://sdk.minepi.com/pi-sdk.js";
-    script.async = true;
-    script.onload = () => {
-      if (window.Pi) {
-        window.Pi.init({ version: "2.0", sandbox: false });
-        console.log("Pi SDK جاهز ✅");
-      }
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   // دالة الدفع خطوة 10
   const payPi = () => {
