@@ -14,5 +14,4 @@ export default function PiAuth() {
       Login with Pi
     </button>
   );
-
-}
+  }
