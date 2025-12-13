@@ -13,7 +13,7 @@ export default function Home() {
     }
   }, []);
 
-  // دالة الدفع
+  // دالة الدفع خطوة 10
   const payPi = () => {
     window.Pi.createPayment({
       amount: 0.01,
@@ -38,6 +38,7 @@ export default function Home() {
 
   return (
     <Layout>
+      {/* Balance Card */}
       <div className="card mb-4">
         <h2 className="text-gold font-bold text-lg">Balance</h2>
         <p className="text-2xl mt-2">{balance.toFixed(5)} π</p>
@@ -45,6 +46,7 @@ export default function Home() {
         <PiAuth />
       </div>
 
+      {/* Daily Rewards Card */}
       <div className="card mb-4">
         <h2 className="text-gold font-bold text-lg">Daily Rewards</h2>
         <p className="text-gray-400 mt-1">
@@ -53,7 +55,7 @@ export default function Home() {
         <button className="btn-gold w-full mt-3">Claim Now</button>
       </div>
 
-      {/* زر الدفع خطوة 10 */}
+      {/* Test Payment Card خطوة 10 */}
       <div className="card">
         <h2 className="text-gold font-bold text-lg">Test Payment</h2>
         <p className="text-gray-400 mt-1">
@@ -68,4 +70,4 @@ export default function Home() {
       </div>
     </Layout>
   );
-  }
+        }
