@@ -6,15 +6,31 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [balance, setBalance] = useState(78.00441);
 
-  // تهيئة Pi SDK عند تحميل الصفحة
+  // تحميل وتهيئة Pi SDK ديناميكيًا
   useEffect(() => {
-    if (typeof window !== "undefined" && window.Pi) {
-      window.Pi.init({ version: "2.0", sandbox: false });
-    }
+    const script = document.createElement("script");
+    script.src = "https://sdk.minepi.com/pi-sdk.js";
+    script.async = true;
+    script.onload = () => {
+      if (window.Pi) {
+        window.Pi.init({ version: "2.0", sandbox: false });
+        console.log("Pi SDK جاهز ✅");
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
   // دالة الدفع خطوة 10
   const payPi = () => {
+    if (!window.Pi) {
+      alert("Pi SDK غير جاهز بعد. حاول مرة أخرى.");
+      return;
+    }
+
     window.Pi.createPayment({
       amount: 0.01,
       memo: "Test Payment - Rewards Hub Pi",
