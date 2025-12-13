@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Script from "next/script";
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -38,7 +39,16 @@ export default function Layout({ children }) {
       </div>
 
       {/* Pi SDK */}
-      <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+      <Script
+        src="https://sdk.minepi.com/pi-sdk.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          if (window.Pi) {
+            window.Pi.init({ version: "2.0", sandbox: false });
+            console.log("Pi SDK جاهز ✅");
+          }
+        }}
+      />
     </div>
   );
     }
