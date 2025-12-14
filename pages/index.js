@@ -1,71 +1,108 @@
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import PiAuth from "../components/PiAuth";
 import WalletConnect from "../components/WalletConnect";
-import { useState } from "react";
 
 export default function Home() {
   const [balance, setBalance] = useState(78.00441);
+  const [piReady, setPiReady] = useState(false);
 
-  // دالة الدفع خطوة 10
+  // تهيئة Pi SDK
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.Pi) {
+      try {
+        window.Pi.init({
+          version: "2.0",
+          sandbox: false, // ❗ production
+        });
+        setPiReady(true);
+      } catch (e) {
+        console.error("Pi init error:", e);
+      }
+    }
+  }, []);
+
+  // خطوة 10: اختبار الدفع
   const payPi = () => {
     if (!window.Pi) {
-      alert("Pi SDK غير جاهز بعد. حاول مرة أخرى.");
+      alert("❌ افتح التطبيق من Pi Browser");
       return;
     }
 
-    window.Pi.createPayment({
-      amount: 0.01,
-      memo: "Test Payment - Rewards Hub Pi",
-      metadata: { app: "Rewards Hub Pi" }
-    }, {
-      onReadyForServerApproval(paymentId) {
-        console.log("Approval:", paymentId);
+    window.Pi.createPayment(
+      {
+        amount: 0.01,
+        memo: "Test Payment - Rewards Hub Pi",
+        metadata: {
+          app: "Rewards Hub Pi",
+          type: "test-payment",
+        },
       },
-      onReadyForServerCompletion(paymentId) {
-        alert("Payment Success ✅");
-      },
-      onCancel() {
-        alert("Payment Cancelled");
-      },
-      onError(err) {
-        alert("Payment Error");
-        console.error(err);
+      {
+        onReadyForServerApproval(paymentId) {
+          console.log("Server approval needed:", paymentId);
+        },
+
+        onReadyForServerCompletion(paymentId) {
+          console.log("Payment completed:", paymentId);
+          alert("✅ تم الدفع بنجاح");
+        },
+
+        onCancel() {
+          alert("❌ تم إلغاء الدفع");
+        },
+
+        onError(error) {
+          console.error("Payment error:", error);
+          alert("❌ خطأ في الدفع");
+        },
       }
-    });
+    );
   };
 
   return (
     <Layout>
-      {/* Balance Card */}
+      {/* Balance */}
       <div className="card mb-4">
         <h2 className="text-gold font-bold text-lg">Balance</h2>
         <p className="text-2xl mt-2">{balance.toFixed(5)} π</p>
+
         <WalletConnect />
         <PiAuth />
+
+        {!piReady && (
+          <p className="text-red-400 text-sm mt-2">
+            ❌ افتح التطبيق من Pi Browser
+          </p>
+        )}
       </div>
 
-      {/* Daily Rewards Card */}
+      {/* Daily Rewards */}
       <div className="card mb-4">
         <h2 className="text-gold font-bold text-lg">Daily Rewards</h2>
         <p className="text-gray-400 mt-1">
           Claim your daily reward and keep your streak alive!
         </p>
-        <button className="btn-gold w-full mt-3">Claim Now</button>
+        <button className="btn-gold w-full mt-3">
+          Claim Now
+        </button>
       </div>
 
-      {/* Test Payment Card خطوة 10 */}
+      {/* Test Payment - Step 10 */}
       <div className="card">
         <h2 className="text-gold font-bold text-lg">Test Payment</h2>
         <p className="text-gray-400 mt-1">
           اضغط الزر لتأكيد أن التطبيق جاهز لاستقبال المدفوعات.
         </p>
+
         <button
           className="btn-gold w-full mt-3"
           onClick={payPi}
+          disabled={!piReady}
         >
           Pay 0.01 Pi
         </button>
       </div>
     </Layout>
   );
-        }
+  }
