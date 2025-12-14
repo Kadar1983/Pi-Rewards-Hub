@@ -2,7 +2,6 @@ import Head from "next/head";
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
-  // فحص تحميل Pi SDK بعد التحميل
   if (typeof window !== "undefined") {
     window.addEventListener("load", () => {
       if (window.Pi) {
@@ -22,4 +21,4 @@ export default function App({ Component, pageProps }) {
       <Component {...pageProps} />
     </>
   );
-    }
+}
