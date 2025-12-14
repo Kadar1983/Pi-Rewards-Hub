@@ -7,13 +7,13 @@ export default function Home() {
   const [balance, setBalance] = useState(78.00441);
   const [piReady, setPiReady] = useState(false);
 
-  // تهيئة Pi SDK
+  // تهيئة Pi SDK (Sandbox)
   useEffect(() => {
     if (typeof window !== "undefined" && window.Pi) {
       try {
         window.Pi.init({
           version: "2.0",
-          sandbox: false, // ❗ production
+          sandbox: true, // ✅ مهم جدًا
         });
         setPiReady(true);
       } catch (e) {
@@ -22,7 +22,7 @@ export default function Home() {
     }
   }, []);
 
-  // خطوة 10: اختبار الدفع
+  // Test Payment (Step 10)
   const payPi = () => {
     if (!window.Pi) {
       alert("❌ افتح التطبيق من Pi Browser");
@@ -31,30 +31,30 @@ export default function Home() {
 
     window.Pi.createPayment(
       {
-        amount: 0.01,
-        memo: "Test Payment - Rewards Hub Pi",
+        amount: 1,
+        memo: "Sandbox Test Payment",
         metadata: {
           app: "Rewards Hub Pi",
-          type: "test-payment",
+          test: true,
         },
       },
       {
         onReadyForServerApproval(paymentId) {
-          console.log("Server approval needed:", paymentId);
+          console.log("Approval needed:", paymentId);
         },
 
         onReadyForServerCompletion(paymentId) {
-          console.log("Payment completed:", paymentId);
-          alert("✅ تم الدفع بنجاح");
+          console.log("Completed:", paymentId);
+          alert("✅ Test Payment Successful");
         },
 
         onCancel() {
-          alert("❌ تم إلغاء الدفع");
+          alert("❌ Payment Cancelled");
         },
 
         onError(error) {
-          console.error("Payment error:", error);
-          alert("❌ خطأ في الدفع");
+          console.error(error);
+          alert("❌ Payment Error");
         },
       }
     );
@@ -88,11 +88,11 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Test Payment - Step 10 */}
+      {/* Step 10 */}
       <div className="card">
         <h2 className="text-gold font-bold text-lg">Test Payment</h2>
         <p className="text-gray-400 mt-1">
-          اضغط الزر لتأكيد أن التطبيق جاهز لاستقبال المدفوعات.
+          هذا دفع تجريبي (Sandbox) لإكمال خطوة 10.
         </p>
 
         <button
@@ -100,9 +100,9 @@ export default function Home() {
           onClick={payPi}
           disabled={!piReady}
         >
-          Pay 0.01 Pi
+          Test Pay (Sandbox)
         </button>
       </div>
     </Layout>
   );
-  }
+        }
