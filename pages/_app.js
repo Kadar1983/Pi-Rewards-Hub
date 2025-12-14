@@ -7,7 +7,6 @@ export default function App({ Component, pageProps }) {
     window.addEventListener("load", () => {
       if (window.Pi) {
         console.log("✅ Pi SDK محمّل بنجاح!");
-        alert("✅ Pi SDK محمّل بنجاح!");
       } else {
         console.error("❌ Pi SDK غير محمّل!");
         alert("❌ Pi SDK غير محمّل! افتح التطبيق من Pi Browser فقط.");
@@ -23,4 +22,4 @@ export default function App({ Component, pageProps }) {
       <Component {...pageProps} />
     </>
   );
-}
+    }
