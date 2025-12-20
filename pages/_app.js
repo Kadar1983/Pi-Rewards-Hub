@@ -1,24 +1,27 @@
-import Head from "next/head";
+import { useEffect, useState } from "react";
 import "../styles/globals.css";
 
-export default function App({ Component, pageProps }) {
-  if (typeof window !== "undefined") {
-    window.addEventListener("load", () => {
-      if (window.Pi) {
-        console.log("✅ Pi SDK محمّل بنجاح!");
-      } else {
-        console.error("❌ Pi SDK غير محمّل!");
-        alert("❌ Pi SDK غير محمّل! افتح التطبيق من Pi Browser فقط.");
-      }
-    });
+export default function MyApp({ Component, pageProps }) {
+  const [piReady, setPiReady] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const script = document.createElement("script");
+      script.src = "https://sdk.minepi.com/pi-sdk.js";
+      script.async = true;
+      script.onload = () => {
+        if (window.Pi) {
+          window.Pi.init({ version: "2.0", sandbox: true });
+          setPiReady(true);
+        }
+      };
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  if (!piReady) {
+    return <div style={{ padding: 20 }}>Loading Pi SDK...</div>;
   }
 
-  return (
-    <>
-      <Head>
-        <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-      </Head>
-      <Component {...pageProps} />
-    </>
-  );
-  }
+  return <Component {...pageProps} />;
+}
