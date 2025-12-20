@@ -26,7 +26,7 @@ export default function Home() {
       textAlign: "center",
       boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
     }}>
-      <h2>📝 Pro Task Manager</h2>
+      <h2>🎁 Rewards Hub Pi</h2>
       <p>Not logged in</p>
       <button onClick={login} style={{
         width: "100%",
