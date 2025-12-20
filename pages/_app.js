@@ -24,7 +24,7 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
 
   if (!piReady) {
-    return <div className="flex items-center justify-center h-screen bg-black text-white">Loading Pi SDK...</div>;
+    return <div className="flex items-center justify-center h-screen bg-gradient-to-br from-purple-700 to-blue-500 text-white font-bold text-xl">Loading Pi SDK...</div>;
   }
 
   return <Component {...pageProps} />;
