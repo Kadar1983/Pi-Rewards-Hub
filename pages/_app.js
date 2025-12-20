@@ -6,21 +6,29 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const script = document.createElement("script");
-      script.src = "https://sdk.minepi.com/pi-sdk.js";
-      script.async = true;
-      script.onload = () => {
-        if (window.Pi) {
-          window.Pi.init({ version: "2.0", sandbox: true });
-          setPiReady(true);
-        }
-      };
-      document.body.appendChild(script);
+      if (!window.Pi) {
+        const script = document.createElement("script");
+        script.src = "https://sdk.minepi.com/pi-sdk.js";
+        script.async = true;
+        script.onload = () => {
+          if (window.Pi) {
+            window.Pi.init({ version: "2.0", sandbox: true });
+            setPiReady(true);
+          }
+        };
+        document.body.appendChild(script);
+      } else {
+        setPiReady(true);
+      }
     }
   }, []);
 
   if (!piReady) {
-    return <div style={{ padding: 40, textAlign: "center", color: "#fff", background: "#000" }}>Loading Pi SDK...</div>;
+    return (
+      <div style={{ padding: 40, textAlign: "center", color: "#fff", background: "#000" }}>
+        Loading Pi SDK...
+      </div>
+    );
   }
 
   return <Component {...pageProps} />;
