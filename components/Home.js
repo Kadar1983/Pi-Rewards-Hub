@@ -14,9 +14,20 @@ export default function Home() {
     }
   };
 
+  const claim = () => {
+    if (!user) return alert("Login first!");
+    alert("Reward claimed! (Placeholder)");
+  };
+
+  const features = [
+    { name: "🏆 Rewards", link: "/rewards", color: "from-purple-400 to-blue-500" },
+    { name: "💰 Withdraw", link: "/withdraw", color: "from-green-400 to-green-600" },
+    { name: "🎮 Game", link: "/game", color: "from-pink-400 to-red-500" },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-purple-50 to-blue-50 p-6">
-      <h1 className="text-4xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500">
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-blue-100 flex flex-col items-center p-6">
+      <h1 className="text-4xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
         🎁 Pi Rewards Hub
       </h1>
 
@@ -24,18 +35,38 @@ export default function Home() {
 
       <button
         onClick={login}
-        className="w-64 py-3 mb-4 bg-yellow-500 text-white font-bold rounded-xl shadow hover:bg-yellow-600 transition"
+        className="w-full max-w-sm py-3 mb-4 bg-yellow-500 text-white font-bold rounded-xl shadow hover:bg-yellow-600 transition"
       >
         {user ? "Switch Account" : "Login with Pi"}
       </button>
 
       <button
-        onClick={() => alert("Claim Reward")}
+        onClick={claim}
         disabled={!user}
-        className="w-64 py-3 mb-6 bg-green-500 text-white font-bold rounded-xl shadow hover:bg-green-600 transition disabled:opacity-50"
+        className="w-full max-w-sm py-3 mb-6 bg-green-500 text-white font-bold rounded-xl shadow hover:bg-green-600 transition disabled:opacity-50"
       >
         Claim Reward
       </button>
+
+      <div className="grid grid-cols-1 gap-4 w-full max-w-sm">
+        {features.map((f) => (
+          <a
+            key={f.name}
+            href={f.link}
+            className={`block p-5 rounded-2xl shadow-lg text-white font-bold text-center text-lg bg-gradient-to-r ${f.color} transform hover:scale-105 transition`}
+          >
+            {f.name}
+          </a>
+        ))}
+      </div>
+
+      <footer className="mt-auto bg-white rounded-t-3xl shadow-lg flex justify-around py-4 w-full max-w-sm">
+        {features.map((f) => (
+          <a key={f.name} href={f.link} className="text-gray-600 hover:text-gray-900 font-semibold">
+            {f.name.split(" ")[1]}
+          </a>
+        ))}
+      </footer>
     </div>
   );
-    }
+}
