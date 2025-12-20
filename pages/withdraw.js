@@ -1,36 +1,29 @@
-import Layout from "../components/Layout";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Withdraw() {
-  const [points, setPoints] = useState(0);
-  const [converted, setConverted] = useState(0);
+  const [amount, setAmount] = useState("");
 
-  useEffect(() => {
-    const score = localStorage.getItem("pi_score");
-    if (score) setPoints(Number(score));
-  }, []);
-
-  const convertPoints = () => {
-    if (points === 0) return alert("No points to convert!");
-    const piAmount = (points * 0.01).toFixed(5); // Placeholder rate
-    setConverted(piAmount);
-    alert(`Converted ${points} points → ${piAmount} π (Demo)`);
+  const handleWithdraw = () => {
+    if (!amount) return alert("Enter amount first!");
+    alert(`Withdrawal request for ${amount} π submitted! (Placeholder)`);
   };
 
   return (
-    <Layout>
-      <div className="card text-center">
-        <h2 className="text-gold font-bold text-xl">💰 Convert Points to Pi</h2>
-        <p className="mt-2 text-gray-400">Your points: {points}</p>
-        <button onClick={convertPoints} className="btn-gold w-full mt-4">
-          Convert to Pi
-        </button>
-        {converted > 0 && (
-          <p className="mt-2 text-green-400">
-            You have {converted} π (Demo)
-          </p>
-        )}
-      </div>
-    </Layout>
+    <div className="max-w-md mx-auto mt-12 p-6 bg-white rounded-3xl shadow-lg">
+      <h1 className="text-2xl font-bold mb-6 text-center">💰 Withdraw</h1>
+      <input
+        type="number"
+        placeholder="Amount to withdraw"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        className="w-full p-3 mb-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
+      <button
+        onClick={handleWithdraw}
+        className="w-full py-3 bg-green-500 text-white rounded-xl font-semibold shadow hover:bg-green-600 transition"
+      >
+        Withdraw
+      </button>
+    </div>
   );
-    }
+}
