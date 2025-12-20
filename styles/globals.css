@@ -1,10 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f0f2f5, #e0e7ff);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  font-family: 'Inter', sans-serif;
 }
