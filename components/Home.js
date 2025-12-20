@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { PiAuth } from "./PiAuth";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   const login = async () => {
     try {
@@ -19,10 +21,14 @@ export default function Home() {
     alert("Reward claimed! (Placeholder)");
   };
 
+  const navigate = (path) => {
+    router.push(path);
+  };
+
   const features = [
-    { name: "🏆 Rewards", link: "/rewards", color: "from-purple-400 to-blue-500" },
-    { name: "💰 Withdraw", link: "/withdraw", color: "from-green-400 to-green-600" },
-    { name: "🎮 Game", link: "/game", color: "from-pink-400 to-red-500" },
+    { name: "🏆 Rewards", path: "/rewards" },
+    { name: "💰 Withdraw", path: "/withdraw" },
+    { name: "🎮 Game", path: "/game" },
   ];
 
   return (
@@ -50,23 +56,15 @@ export default function Home() {
 
       <div className="grid grid-cols-1 gap-4 w-full max-w-sm">
         {features.map((f) => (
-          <a
+          <button
             key={f.name}
-            href={f.link}
-            className={`block p-5 rounded-2xl shadow-lg text-white font-bold text-center text-lg bg-gradient-to-r ${f.color} transform hover:scale-105 transition`}
+            onClick={() => navigate(f.path)}
+            className="block p-5 rounded-2xl shadow-lg text-white font-bold text-center text-lg bg-gradient-to-r from-purple-400 to-blue-500 transform hover:scale-105 transition"
           >
             {f.name}
-          </a>
+          </button>
         ))}
       </div>
-
-      <footer className="mt-auto bg-white rounded-t-3xl shadow-lg flex justify-around py-4 w-full max-w-sm">
-        {features.map((f) => (
-          <a key={f.name} href={f.link} className="text-gray-600 hover:text-gray-900 font-semibold">
-            {f.name.split(" ")[1]}
-          </a>
-        ))}
-      </footer>
     </div>
   );
 }
