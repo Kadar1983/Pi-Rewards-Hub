@@ -11,10 +11,8 @@ export default function MyApp({ Component, pageProps }) {
         script.src = "https://sdk.minepi.com/pi-sdk.js";
         script.async = true;
         script.onload = () => {
-          if (window.Pi) {
-            window.Pi.init({ version: "2.0", sandbox: true });
-            setPiReady(true);
-          }
+          window.Pi.init({ version: "2.0", sandbox: true });
+          setPiReady(true);
         };
         document.body.appendChild(script);
       } else {
@@ -24,7 +22,7 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
 
   if (!piReady) {
-    return <div className="flex items-center justify-center h-screen bg-gradient-to-br from-purple-700 to-blue-500 text-white font-bold text-xl">Loading Pi SDK...</div>;
+    return <div className="flex items-center justify-center h-screen bg-black text-white">Loading Pi SDK...</div>;
   }
 
   return <Component {...pageProps} />;
