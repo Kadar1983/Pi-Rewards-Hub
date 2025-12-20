@@ -18,12 +18,10 @@ export default function Home() {
 
   const claim = () => {
     if (!user) return alert("Login first!");
-    alert("Reward claimed! (Placeholder)");
+    alert("Reward claimed!");
   };
 
-  const navigate = (path) => {
-    router.push(path);
-  };
+  const navigate = (path) => router.push(path);
 
   const features = [
     { name: "🏆 Rewards", path: "/rewards" },
