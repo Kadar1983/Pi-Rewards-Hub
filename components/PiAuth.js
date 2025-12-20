@@ -1,9 +1,9 @@
-export const PiAuth = () => {
+export const PiAuth = async () => {
+  if (!window.Pi) throw new Error("Pi SDK not loaded. Open in Pi Browser.");
   return new Promise((resolve, reject) => {
-    if (!window.Pi) return reject("Pi SDK not loaded. Open in Pi Browser.");
     window.Pi.authenticate(
-      ["username"],
-      (auth) => resolve(auth.user),
+      ["username"], // البيانات المطلوبة
+      (user) => resolve(user),
       (err) => reject(err)
     );
   });
