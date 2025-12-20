@@ -1,34 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --gold: #FFD700;
-  --violet: #8B5CF6;
-  --darkbg: #0F0F0F;
-}
-
 body {
-  background-color: var(--darkbg);
-  font-family: 'Inter', sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
 }
-
-.card {
-  background: #1C1C1C;
-  padding: 1rem;
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+button:hover {
+  opacity: 0.9;
 }
-
-.btn-gold {
-  background: linear-gradient(to right, var(--gold), var(--violet));
-  color: black;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-  font-weight: bold;
-  transition: all 0.2s ease;
-}
-.btn-gold:hover {
-  transform: scale(1.05);
-                                            }
