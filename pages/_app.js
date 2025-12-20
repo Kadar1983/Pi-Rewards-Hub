@@ -20,7 +20,11 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
 
   if (!piReady) {
-    return <div style={{ padding: 20 }}>Loading Pi SDK...</div>;
+    return (
+      <div style={{ padding: 40, textAlign: "center", color: "#fff", background: "#000" }}>
+        Loading Pi SDK...
+      </div>
+    );
   }
 
   return <Component {...pageProps} />;
