@@ -8,7 +8,7 @@ export default function MyApp({ Component, pageProps }) {
     if (typeof window !== "undefined") {
       if (!window.Pi) {
         const script = document.createElement("script");
-        script.src = "https://sdk.minepi.com/pi-sdk.js"; // الرابط الرسمي
+        script.src = "https://sdk.minepi.com/pi-sdk.js";
         script.async = true;
         script.onload = () => {
           if(window.Pi) window.Pi.init({ version: "2.0", sandbox: true });
