@@ -1,49 +1,21 @@
-import { useState, useEffect } from "react";
-import Layout from "../components/Layout";
-
 export default function Rewards() {
-  const [streak, setStreak] = useState(0);
-  const [claimedToday, setClaimedToday] = useState(false);
-
-  useEffect(() => {
-    const savedStreak = localStorage.getItem("pi_streak");
-    const lastClaim = localStorage.getItem("pi_last_claim");
-    if (savedStreak) setStreak(Number(savedStreak));
-
-    if (lastClaim) {
-      const today = new Date().toDateString();
-      setClaimedToday(lastClaim === today);
-    }
-  }, []);
-
-  const claimReward = () => {
-    if (claimedToday) return alert("You already claimed today!");
-    const today = new Date().toDateString();
-    const newStreak = streak + 1;
-
-    setStreak(newStreak);
-    setClaimedToday(true);
-
-    localStorage.setItem("pi_streak", newStreak);
-    localStorage.setItem("pi_last_claim", today);
-
-    alert(`Daily reward claimed! Streak: ${newStreak}`);
-  };
+  const rewardsList = [
+    { id: 1, title: "Daily Bonus", amount: "10 π" },
+    { id: 2, title: "Weekly Challenge", amount: "50 π" },
+    { id: 3, title: "Referral Reward", amount: "20 π" },
+  ];
 
   return (
-    <Layout>
-      <div className="card text-center">
-        <h2 className="text-gold font-bold text-xl">🎁 Daily Reward</h2>
-        <p className="mt-2 text-gray-400">
-          Your current streak: <strong>{streak}</strong> days
-        </p>
-        <button
-          onClick={claimReward}
-          className="btn-gold w-full mt-4 text-lg"
-        >
-          {claimedToday ? "Already Claimed" : "Claim Reward"}
-        </button>
+    <div className="max-w-md mx-auto mt-12 p-6 bg-white rounded-3xl shadow-lg">
+      <h1 className="text-2xl font-bold mb-6 text-center">🏆 Rewards</h1>
+      <div className="space-y-4">
+        {rewardsList.map(reward => (
+          <div key={reward.id} className="p-4 rounded-xl shadow hover:shadow-lg transition flex justify-between items-center bg-gradient-to-r from-purple-100 to-blue-100">
+            <span className="font-semibold">{reward.title}</span>
+            <span className="font-bold">{reward.amount}</span>
+          </div>
+        ))}
       </div>
-    </Layout>
+    </div>
   );
 }
