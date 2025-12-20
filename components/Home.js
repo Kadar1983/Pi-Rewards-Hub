@@ -22,4 +22,5 @@ export default function Home() {
       <button onClick={login}>Login with Pi</button>
     </div>
   );
+
 }
