@@ -1,10 +1,7 @@
-import Home from "../components/Home";
-
 export default function Game() {
   return (
-    <div>
-      <h1 className="text-center text-3xl font-bold my-6">🎮 Game</h1>
-      <Home />
+    <div className="min-h-screen flex items-center justify-center text-3xl font-bold">
+      🎮 Game Page
     </div>
   );
 }
