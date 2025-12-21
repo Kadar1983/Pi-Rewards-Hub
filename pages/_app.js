@@ -1,5 +1,5 @@
-import Home from "../components/Home";
+import "../styles/globals.css";
 
-export default function Index() {
-  return <Home />;
-    }
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
