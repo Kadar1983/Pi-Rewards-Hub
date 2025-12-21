@@ -1,79 +1,89 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useApp } from "./AppContext";
 
 export default function Home() {
-  const [logged, setLogged] = useState(false);
+  const [user, setUser] = useState(null);
+  const [piReady, setPiReady] = useState(false);
   const router = useRouter();
-  const { points } = useApp();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.Pi) {
+        setPiReady(true);
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://sdk.minepi.com/pi-sdk.js";
+        script.async = true;
+        script.onload = () => {
+          if (window.Pi) window.Pi.init({ version: "2.0", sandbox: true });
+          setPiReady(true);
+        };
+        document.body.appendChild(script);
+      }
+    }
+  }, []);
+
+  const login = async () => {
+    if (!window.Pi) return alert("Please open in Pi Browser.");
+    try {
+      window.Pi.authenticate(["username"], (authUser) => {
+        setUser(authUser.username);
+        alert(`Welcome ${authUser.username}`);
+      }, (err) => alert("Login failed: " + err));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const claimReward = () => {
+    if (!user) return alert("Login first!");
+    alert("Reward claimed!");
+  };
+
+  const navigate = (path) => router.push(path);
+
+  if (!piReady) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-purple-700 to-blue-500 text-white font-bold text-center p-4">
+        ⚠️ Loading Pi SDK... Please open in Pi Browser
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-purple-100 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-blue-100 flex flex-col items-center p-6">
+      <h1 className="text-4xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+        🎁 Pi Rewards Hub
+      </h1>
 
-      {/* HEADER */}
-      <div className="p-6 text-center">
-        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
-          🎁 Pi Rewards Hub
-        </h1>
-        <p className="mt-2 text-gray-700">
-          {logged ? `Logged in • ${points} pts` : "Not logged in"}
-        </p>
-      </div>
+      <p className="mb-6">{user ? `Logged in as ${user}` : "Not logged in"}</p>
 
-      {/* MAIN */}
-      <div className="flex-1 px-6">
-        <button
-          onClick={() => setLogged(true)}
-          className="w-full py-3 mb-4 bg-yellow-500 text-white font-bold rounded-2xl shadow"
-        >
-          {logged ? "Logged" : "Login"}
+      <button
+        onClick={login}
+        className="w-full max-w-sm py-3 mb-4 bg-yellow-500 text-white font-bold rounded-xl shadow hover:bg-yellow-600 transition"
+      >
+        {user ? "Switch Account" : "Login with Pi"}
+      </button>
+
+      <button
+        onClick={claimReward}
+        disabled={!user}
+        className="w-full max-w-sm py-3 mb-6 bg-green-500 text-white font-bold rounded-xl shadow hover:bg-green-600 transition disabled:opacity-50"
+      >
+        Claim Reward
+      </button>
+
+      <div className="grid grid-cols-1 gap-4 w-full max-w-sm">
+        <button onClick={() => navigate("/rewards")} className="p-5 rounded-2xl shadow-lg text-white font-bold text-center text-lg bg-gradient-to-r from-purple-400 to-blue-500 transform hover:scale-105 transition">
+          🏆 Rewards
         </button>
-
-        <button
-          onClick={() => alert("Reward claimed 🎉")}
-          disabled={!logged}
-          className="w-full py-3 mb-6 bg-green-500 text-white font-bold rounded-2xl shadow disabled:opacity-50"
-        >
-          Claim Reward
+        <button onClick={() => navigate("/withdraw")} className="p-5 rounded-2xl shadow-lg text-white font-bold text-center text-lg bg-gradient-to-r from-purple-400 to-blue-500 transform hover:scale-105 transition">
+          💰 Withdraw
         </button>
-
-        <div className="grid gap-4">
-          <Card title="🏆 Rewards" onClick={() => router.push("/rewards")} />
-          <Card title="💰 Withdraw" onClick={() => router.push("/withdraw")} />
-          <Card title="🎮 Game" onClick={() => router.push("/game")} />
-          <Card title="👤 Profile" onClick={() => router.push("/profile")} />
-        </div>
-      </div>
-
-      {/* BOTTOM NAV */}
-      <div className="flex justify-around bg-white py-4 rounded-t-3xl shadow-lg">
-        <Nav label="Rewards" onClick={() => router.push("/rewards")} />
-        <Nav label="Withdraw" onClick={() => router.push("/withdraw")} />
-        <Nav label="Game" onClick={() => router.push("/game")} />
-        <Nav label="Profile" onClick={() => router.push("/profile")} />
+        <button onClick={() => navigate("/game")} className="p-5 rounded-2xl shadow-lg text-white font-bold text-center text-lg bg-gradient-to-r from-purple-400 to-blue-500 transform hover:scale-105 transition">
+          🎮 Game
+        </button>
       </div>
     </div>
   );
 }
-
-function Card({ title, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="p-5 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold shadow-lg"
-    >
-      {title}
-    </button>
-  );
-}
-
-function Nav({ label, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="font-semibold text-gray-700"
-    >
-      {label}
-    </button>
-  );
-    }
