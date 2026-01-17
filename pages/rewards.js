@@ -1,7 +1,12 @@
-import { useApp } from "@/components/AppContext";
+import { useApp } from "../components/AppContext";
+import { useEffect } from "react";
 
 export default function Rewards() {
-  const { user, points } = useApp();
+  const { user, points, loadRewards } = useApp();
+
+  useEffect(() => {
+    if (user) loadRewards(user);
+  }, [user]);
 
   return (
     <div style={{ padding: 20 }}>
@@ -13,8 +18,8 @@ export default function Rewards() {
           <p>100 نقطة = 1 Pi</p>
         </>
       ) : (
-        <p>Not logged in</p>
+        <p>يرجى تسجيل الدخول أولًا</p>
       )}
     </div>
   );
-}
+  }
