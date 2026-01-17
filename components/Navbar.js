@@ -10,7 +10,7 @@ export default function Navbar() {
       justifyContent: "space-around",
       alignItems: "center",
       padding: "10px 0",
-      backgroundColor: "#4caf50",
+      background: "linear-gradient(90deg, #4caf50, #81c784)",
       position: "fixed",
       bottom: 0,
       width: "100%",
@@ -18,24 +18,28 @@ export default function Navbar() {
       margin: "0 auto",
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
+      boxShadow: "0 -2px 5px rgba(0,0,0,0.2)",
       color: "white"
     }}>
-      <Link href="/">
-        <button style={{ background: "none", color: "white", border: "none" }}>🏠 Home</button>
-      </Link>
-      <Link href="/game">
-        <button style={{ background: "none", color: "white", border: "none" }}>🎮 Game</button>
-      </Link>
-      <Link href="/rewards">
-        <button style={{ background: "none", color: "white", border: "none" }}>🎁 Rewards</button>
-      </Link>
-      <Link href="/withdraw">
-        <button style={{ background: "none", color: "white", border: "none" }}>💰 Withdraw</button>
-      </Link>
-      <Link href="/profile">
-        <button style={{ background: "none", color: "white", border: "none" }}>🧑‍💻 Profile</button>
-      </Link>
+      <Link href="/"><button className="nav-btn">🏠 Home</button></Link>
+      <Link href="/game"><button className="nav-btn">🎮 Game</button></Link>
+      <Link href="/rewards"><button className="nav-btn">🎁 Rewards</button></Link>
+      <Link href="/withdraw"><button className="nav-btn">💰 Withdraw</button></Link>
+      <Link href="/profile"><button className="nav-btn">🧑‍💻 Profile</button></Link>
+
+      <style jsx>{`
+        .nav-btn {
+          background: none;
+          color: white;
+          border: none;
+          font-size: 14px;
+          cursor: pointer;
+        }
+        .nav-btn:hover {
+          transform: scale(1.1);
+          transition: transform 0.2s;
+        }
+      `}</style>
     </nav>
   );
-
-}
+  }
