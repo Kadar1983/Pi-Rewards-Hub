@@ -1,4 +1,4 @@
-عimport { useApp } from "../components/AppContext";
+import { useApp } from "../components/AppContext";
 
 export default function Profile() {
   const { points, dark, toggleDark } = useApp();
@@ -17,3 +17,4 @@ export default function Profile() {
   );
 
 }
+
