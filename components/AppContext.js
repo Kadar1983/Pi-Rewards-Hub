@@ -1,55 +1,44 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
+// إنشاء Context
 const AppContext = createContext();
 
-export function AppProvider({ children }) {
-  const [user, setUser] = useState(null);
+export const AppProvider = ({ children }) => {
+  const [user, setUser] = useState(null); // بيانات المستخدم من Pi
   const [points, setPoints] = useState(0);
 
-  // محاكاة Pi SDK للـ Desktop
+  // تسجيل الدخول عبر Pi Browser
   useEffect(() => {
-    if (typeof window !== "undefined" && !window.Pi) {
-      window.Pi = {
-        init: () => console.log("Pi init mock"),
-        authenticate: (scopes, success, error) => {
-          const username = "TestUser"; // اسم وهمي
-          success({ user: { username } });
-        },
-      };
-    }
+    const login = async () => {
+      if (window.Pi) {
+        try {
+          const userData = await window.Pi.authenticate({ scope: "username" });
+          setUser({
+            username: userData.username,
+            id: userData.id
+          });
+
+          // هنا يمكنك جلب النقاط من قاعدة بياناتك أو محفظة Pi
+          setPoints(0); // مؤقتًا يمكن أن تبدأ بصفر
+        } catch (err) {
+          console.error("Pi Login failed:", err);
+        }
+      }
+    };
+
+    login();
   }, []);
 
-  const login = () => {
-    if (!window.Pi) return alert("Pi SDK غير متاح");
-
-    Pi.authenticate(
-      ["username", "payments"],
-      async (auth) => {
-        const username = auth.user.username;
-        setUser(username);
-        localStorage.setItem("pi_user", username);
-        await loadRewards(username);
-      },
-      (err) => console.error(err)
-    );
-  };
-
-  const loadRewards = async (username) => {
-    const mockPoints = parseInt(localStorage.getItem("pi_points")) || 0;
-    setPoints(mockPoints);
-  };
-
-  const addPoints = (p) => {
-    const newPoints = points + p;
-    setPoints(newPoints);
-    localStorage.setItem("pi_points", newPoints);
+  const addPoints = (n) => {
+    setPoints((prev) => prev + n);
   };
 
   return (
-    <AppContext.Provider value={{ user, points, login, loadRewards, addPoints }}>
+    <AppContext.Provider value={{ user, points, addPoints }}>
       {children}
     </AppContext.Provider>
   );
-}
+};
 
+// Hook للاستخدام داخل أي مكون
 export const useApp = () => useContext(AppContext);
