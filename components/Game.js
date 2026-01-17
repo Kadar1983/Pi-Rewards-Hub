@@ -11,7 +11,7 @@ export default function Game() {
   const [dailyClaimed, setDailyClaimed] = useState(false);
   const [leaderboard, setLeaderboard] = useState([]);
 
-  // ========== إنشاء كائن جديد ==========
+  // ======== إنشاء كائن جديد =========
   const createObject = () => {
     setObjects((prev) => [
       ...prev,
@@ -20,18 +20,16 @@ export default function Game() {
         x: Math.random() * 90,
         y: 0,
         speed: 1.5 + level * 0.5,
-        scale: 1,
       },
     ]);
   };
 
-  // ========== بدء اللعبة ==========
+  // ======== بدء اللعبة =========
   const startGame = () => {
     if (!user) {
       alert("يرجى تسجيل الدخول عبر Pi Browser");
       return;
     }
-
     setScore(0);
     setLevel(1);
     setGameOver(false);
@@ -42,7 +40,7 @@ export default function Game() {
     for (let i = 0; i < 3; i++) createObject();
   };
 
-  // ========== حركة الكائنات ==========
+  // ======== حركة الكائنات =========
   useEffect(() => {
     if (gameOver) return;
 
@@ -62,7 +60,7 @@ export default function Game() {
     return () => clearInterval(timer);
   }, [gameOver, score, level]);
 
-  // ========== عند الضغط على كائن ==========
+  // ======== الضغط على الكائن =========
   const hitObject = (id) => {
     if (!user) {
       alert("يرجى تسجيل الدخول عبر Pi Browser");
@@ -77,20 +75,17 @@ export default function Game() {
         setLevel((l) => l + 1);
         createObject(); // زيادة صعوبة
       }
-
       return newScore;
     });
 
     setObjects((prev) =>
-      prev
-        .filter((o) => o.id !== id)
-        .map((o) => ({ ...o, scale: 1 }))
+      prev.filter((o) => o.id !== id)
     );
 
     createObject();
   };
 
-  // ========== Daily Reward ==========
+  // ======== Daily Reward =========
   const checkDaily = () => {
     const last = localStorage.getItem("daily_reward");
     const today = new Date().toDateString();
@@ -112,7 +107,7 @@ export default function Game() {
     alert("🎁 حصلت على 5 نقاط يومية");
   };
 
-  // ========== Leaderboard ==========
+  // ======== Leaderboard =========
   const loadLeaderboard = () => {
     const lb = JSON.parse(localStorage.getItem("leaderboard")) || [];
     setLeaderboard(lb);
@@ -125,7 +120,7 @@ export default function Game() {
     localStorage.setItem("leaderboard", JSON.stringify(lb.slice(0, 5)));
   };
 
-  // ========== واجهة اللعبة ==========
+  // ======== واجهة اللعبة =========
   return (
     <div style={styles.container}>
       <h2>🎮 Catch the Objects</h2>
@@ -176,7 +171,7 @@ export default function Game() {
   );
 }
 
-// ========== Styles ==========
+// ======== Styles =========
 const styles = {
   container: {
     position: "relative",
