@@ -35,7 +35,6 @@ export function AppProvider({ children }) {
   };
 
   const loadRewards = async (username) => {
-    // محاكاة استدعاء Backend
     const mockPoints = parseInt(localStorage.getItem("pi_points")) || 0;
     setPoints(mockPoints);
   };
