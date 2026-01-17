@@ -1,14 +1,20 @@
-import { useApp } from "../components/AppContext";
+import { useApp } from "@/components/AppContext";
 
 export default function Rewards() {
-  const { points } = useApp();
-  const level = Math.floor(points / 100) + 1;
+  const { user, points } = useApp();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-      <h1 className="text-3xl font-bold">🏆 Rewards</h1>
-      <p className="text-xl">Points: {points}</p>
-      <p className="text-xl">Level: {level}</p>
+    <div style={{ padding: 20 }}>
+      <h2>🎁 Rewards</h2>
+      {user ? (
+        <>
+          <p>المستخدم: {user}</p>
+          <p>النقاط: {points}</p>
+          <p>100 نقطة = 1 Pi</p>
+        </>
+      ) : (
+        <p>Not logged in</p>
+      )}
     </div>
   );
-    }
+}
