@@ -75,7 +75,7 @@ export default function Game() {
 
       if (newScore % 10 === 0) {
         setLevel((l) => l + 1);
-        createObject(); // صعوبة أعلى
+        createObject(); // زيادة صعوبة
       }
 
       return newScore;
