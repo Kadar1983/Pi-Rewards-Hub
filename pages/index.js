@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useApp } from "@/components/AppContext";
+import { useApp } from "../components/AppContext";
 
 export default function Home() {
   const { user, login, points } = useApp();
@@ -10,12 +10,14 @@ export default function Home() {
 
       {user ? (
         <>
-          <p>Welcome {user}</p>
-          <p>Points: {points}</p>
-
-          <Link href="/game">🎮 Play Game</Link>
+          <p>مرحبا {user}</p>
+          <p>النقاط: {points}</p>
           <br />
-          <Link href="/rewards">🎁 Rewards</Link>
+          <Link href="/game">🎮 العب اللعبة</Link>
+          <br />
+          <Link href="/rewards">🎁 المكافآت</Link>
+          <br />
+          <Link href="/withdraw">💰 سحب</Link>
         </>
       ) : (
         <button onClick={login}>Login with Pi</button>
