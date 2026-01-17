@@ -1,8 +1,24 @@
-import { useApp } from "./AppContext";
+import { useApp } from "../components/AppContext";
+import { useState } from "react";
 
-// داخل اللعبة
-const { user, addPoints } = useApp();
+export default function Game() {
+  const { user, addPoints } = useApp();
+  const [score, setScore] = useState(0);
 
-// عند الضغط على كائن
-if (!user) return alert("يرجى تسجيل الدخول أولًا");
-addPoints(1); // النقاط ستضاف لحساب المستخدم
+  const handleClick = () => {
+    if (!user) {
+      alert("يرجى تسجيل الدخول أولًا");
+      return;
+    }
+    addPoints(1);
+    setScore(score + 1);
+  };
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>لعبتك هنا</h1>
+      <p>النقاط في اللعبة: {score}</p>
+      <button onClick={handleClick}>اضغط على الكائن 🎯</button>
+    </div>
+  );
+}
