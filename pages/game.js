@@ -5,20 +5,21 @@ export default function Game() {
   const { user, addPoints } = useApp();
   const [score, setScore] = useState(0);
 
+  // هذه دالة الحدث عند الضغط على الكائن
   const handleClick = () => {
     if (!user) {
       alert("يرجى تسجيل الدخول أولًا");
       return;
     }
-    addPoints(1);          // إضافة نقطة لحساب المستخدم
-    setScore(score + 1);   // تحديث النقاط في اللعبة
+    addPoints(1);         // إضافة نقطة للحساب
+    setScore(score + 1);  // تحديث النقاط داخل اللعبة
   };
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>🎯 لعبتك هنا</h1>
+      <h1>🎮 لعبتك هنا</h1>
       <p>النقاط في اللعبة: {score}</p>
-      <button onClick={handleClick}>اضغط على الكائن</button>
+      <button onClick={handleClick}>اضغط على الكائن 🎯</button>
     </div>
   );
 }
