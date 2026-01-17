@@ -11,7 +11,7 @@ export default function Game() {
   const [dailyClaimed, setDailyClaimed] = useState(false);
   const [leaderboard, setLeaderboard] = useState([]);
 
-  // ========== أدوات اللعبة ==========
+  // ========== إنشاء كائن جديد ==========
   const createObject = () => {
     setObjects((prev) => [
       ...prev,
@@ -25,6 +25,7 @@ export default function Game() {
     ]);
   };
 
+  // ========== بدء اللعبة ==========
   const startGame = () => {
     if (!user) {
       alert("يرجى تسجيل الدخول عبر Pi Browser");
@@ -63,6 +64,11 @@ export default function Game() {
 
   // ========== عند الضغط على كائن ==========
   const hitObject = (id) => {
+    if (!user) {
+      alert("يرجى تسجيل الدخول عبر Pi Browser");
+      return;
+    }
+
     setScore((prev) => {
       const newScore = prev + 1;
       addPoints(1);
@@ -92,6 +98,10 @@ export default function Game() {
   };
 
   const claimDaily = () => {
+    if (!user) {
+      alert("يرجى تسجيل الدخول عبر Pi Browser");
+      return;
+    }
     if (dailyClaimed) {
       alert("تم استلام مكافأة اليوم");
       return;
@@ -115,7 +125,7 @@ export default function Game() {
     localStorage.setItem("leaderboard", JSON.stringify(lb.slice(0, 5)));
   };
 
-  // ========== واجهة ==========
+  // ========== واجهة اللعبة ==========
   return (
     <div style={styles.container}>
       <h2>🎮 Catch the Objects</h2>
