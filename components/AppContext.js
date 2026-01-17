@@ -19,7 +19,6 @@ export function AppProvider({ children }) {
     }
   }, []);
 
-  // 🔐 LOGIN
   const login = () => {
     Pi.authenticate(
       ["username", "payments"],
@@ -33,24 +32,20 @@ export function AppProvider({ children }) {
     );
   };
 
-  // ⭐ LOAD REWARDS
   const loadRewards = async (username) => {
-    const res = await fetch(
-      `https://YOUR_BACKEND_URL/rewards/${username}`
-    );
-    const data = await res.json();
-    setPoints(data.points || 0);
+    try {
+      const res = await fetch(
+        `https://YOUR_BACKEND_URL/rewards/${username}`
+      );
+      const data = await res.json();
+      setPoints(data.points || 0);
+    } catch (e) {
+      console.error("Failed to load rewards:", e);
+    }
   };
 
   return (
-    <AppContext.Provider
-      value={{
-        user,
-        points,
-        login,
-        loadRewards,
-      }}
-    >
+    <AppContext.Provider value={{ user, points, login, loadRewards }}>
       {children}
     </AppContext.Provider>
   );
