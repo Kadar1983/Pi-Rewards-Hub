@@ -10,15 +10,15 @@ export default function Game() {
       alert("يرجى تسجيل الدخول أولًا");
       return;
     }
-    addPoints(1);
-    setScore(score + 1);
+    addPoints(1);          // إضافة نقطة لحساب المستخدم
+    setScore(score + 1);   // تحديث النقاط في اللعبة
   };
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>لعبتك هنا</h1>
+      <h1>🎯 لعبتك هنا</h1>
       <p>النقاط في اللعبة: {score}</p>
-      <button onClick={handleClick}>اضغط على الكائن 🎯</button>
+      <button onClick={handleClick}>اضغط على الكائن</button>
     </div>
   );
 }
