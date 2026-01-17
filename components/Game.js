@@ -11,8 +11,8 @@ export default function Game() {
     if (!playing) return;
     if (time === 0) {
       setPlaying(false);
-      addPoints(score); // إضافة النقاط مباشرة
-      alert(`ربحت ${score} نقاط 🎉`);
+      addPoints(score);
+      alert(`🎉 ربحت ${score} نقاط`);
       return;
     }
     const timer = setTimeout(() => setTime((t) => t - 1), 1000);
@@ -35,7 +35,18 @@ export default function Game() {
     <div style={{ textAlign: "center", padding: 20 }}>
       <h2>🎮 Tap Game</h2>
       {!playing ? (
-        <button onClick={startGame} style={{ padding: 10, fontSize: 18 }}>
+        <button
+          onClick={startGame}
+          style={{
+            padding: "10px 20px",
+            fontSize: 18,
+            borderRadius: 15,
+            background: "linear-gradient(90deg, #42a5f5, #1e88e5)",
+            color: "white",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
           Start Game
         </button>
       ) : (
@@ -44,7 +55,16 @@ export default function Game() {
           <p>⭐ النقاط: {score}</p>
           <button
             onClick={tap}
-            style={{ padding: 30, marginTop: 20, fontSize: 20, borderRadius: "50%" }}
+            style={{
+              padding: 40,
+              marginTop: 20,
+              fontSize: 22,
+              borderRadius: "50%",
+              background: "linear-gradient(90deg, #fdd835, #ffca28)",
+              border: "none",
+              cursor: "pointer",
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)"
+            }}
           >
             TAP
           </button>
