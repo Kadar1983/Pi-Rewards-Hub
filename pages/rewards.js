@@ -9,7 +9,7 @@ export default function Rewards() {
   }, [user]);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: 20, textAlign: "center" }}>
       <h2>🎁 Rewards</h2>
       {user ? (
         <>
