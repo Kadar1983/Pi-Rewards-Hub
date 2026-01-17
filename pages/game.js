@@ -5,7 +5,6 @@ export default function Game() {
   const { user, addPoints } = useApp();
   const [score, setScore] = useState(0);
 
-  // هذه دالة الحدث عند الضغط على الكائن
   const handleClick = () => {
     if (!user) {
       alert("يرجى تسجيل الدخول أولًا");
