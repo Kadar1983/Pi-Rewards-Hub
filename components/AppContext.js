@@ -6,20 +6,22 @@ export function AppProvider({ children }) {
   const [user, setUser] = useState(null);
   const [points, setPoints] = useState(0);
 
+  // محاكاة Pi SDK للـ Desktop
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!window.Pi) return;
-
-    Pi.init({ version: "2.0" });
-
-    const savedUser = localStorage.getItem("pi_user");
-    if (savedUser) {
-      setUser(savedUser);
-      loadRewards(savedUser);
+    if (typeof window !== "undefined" && !window.Pi) {
+      window.Pi = {
+        init: () => console.log("Pi init mock"),
+        authenticate: (scopes, success, error) => {
+          const username = "TestUser"; // اسم وهمي
+          success({ user: { username } });
+        },
+      };
     }
   }, []);
 
   const login = () => {
+    if (!window.Pi) return alert("Pi SDK غير متاح");
+
     Pi.authenticate(
       ["username", "payments"],
       async (auth) => {
@@ -33,19 +35,19 @@ export function AppProvider({ children }) {
   };
 
   const loadRewards = async (username) => {
-    try {
-      const res = await fetch(
-        `https://YOUR_BACKEND_URL/rewards/${username}`
-      );
-      const data = await res.json();
-      setPoints(data.points || 0);
-    } catch (e) {
-      console.error("Failed to load rewards:", e);
-    }
+    // محاكاة استدعاء Backend
+    const mockPoints = parseInt(localStorage.getItem("pi_points")) || 0;
+    setPoints(mockPoints);
+  };
+
+  const addPoints = (p) => {
+    const newPoints = points + p;
+    setPoints(newPoints);
+    localStorage.setItem("pi_points", newPoints);
   };
 
   return (
-    <AppContext.Provider value={{ user, points, login, loadRewards }}>
+    <AppContext.Provider value={{ user, points, login, loadRewards, addPoints }}>
       {children}
     </AppContext.Provider>
   );
