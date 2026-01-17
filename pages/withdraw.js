@@ -1,7 +1,19 @@
+import { useApp } from "../components/AppContext";
+
 export default function Withdraw() {
+  const { user, points } = useApp();
+
   return (
-    <div className="min-h-screen flex items-center justify-center text-3xl font-bold">
-      💰 Withdraw Page
+    <div style={{ padding: 20 }}>
+      <h2>💰 Withdraw</h2>
+      {user ? (
+        <>
+          <p>النقاط المتاحة: {points}</p>
+          <p>ستتم إضافة سحب Pi لاحقًا</p>
+        </>
+      ) : (
+        <p>يرجى تسجيل الدخول أولًا</p>
+      )}
     </div>
   );
 }
