@@ -3,7 +3,6 @@ import { useApp } from "./AppContext";
 
 export default function Game() {
   const { user, loadRewards } = useApp();
-
   const [time, setTime] = useState(15);
   const [score, setScore] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -59,12 +58,7 @@ export default function Game() {
           <p>⭐ النقاط: {score}</p>
           <button
             onClick={tap}
-            style={{
-              marginTop: 20,
-              padding: 30,
-              borderRadius: "50%",
-              fontSize: 18,
-            }}
+            style={{ marginTop: 20, padding: 30, borderRadius: "50%", fontSize: 18 }}
           >
             TAP
           </button>
