@@ -1,15 +1,10 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  background: #f5f5f5;
 }
+
 button {
   cursor: pointer;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
-button:hover {
-  background-color: #45a049;
+  outline: none;
 }
